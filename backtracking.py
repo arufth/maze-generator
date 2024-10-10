@@ -11,6 +11,7 @@ class Directions(Enum):
     """
     Enum to represent the four possible movement directions in the maze.
     """
+
     UP = 1
     DOWN = 2
     LEFT = 3
@@ -65,7 +66,6 @@ class Backtracking:
         # Iterate over the grid to initialize paths and walls
         for i in range(self.height):
             for j in range(self.width):
-
                 # Mark odd columns and rows as walls (represented by 0s)
                 if i % 2 == 1 or j % 2 == 1:
                     maze[i, j] = 0
@@ -93,14 +93,18 @@ class Backtracking:
 
         # Optionally display the maze using OpenCV
         if self.display_maze:
-            cv2.namedWindow('Maze', cv2.WINDOW_NORMAL)
-            cv2.imshow('Maze', maze)
+            cv2.namedWindow("Maze", cv2.WINDOW_NORMAL)
+            cv2.imshow("Maze", maze)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
         # Save the maze to a file, scaling the values to 255 for white color
         maze = maze * 255.0
-        scaled_maze = cv2.resize(maze, (self.width * self.scale, self.height * self.scale), interpolation=cv2.INTER_NEAREST)
+        scaled_maze = cv2.resize(
+            maze,
+            (self.width * self.scale, self.height * self.scale),
+            interpolation=cv2.INTER_NEAREST,
+        )
         cv2.imwrite(self.path, scaled_maze)
 
         return 0
@@ -121,7 +125,12 @@ class Backtracking:
         grid[cy, cx] = 0.5
 
         # Check if all neighboring cells are already visited
-        if not (grid[cy - 2, cx] == 0.5 and grid[cy + 2, cx] == 0.5 and grid[cy, cx - 2] == 0.5 and grid[cy, cx + 2] == 0.5):
+        if not (
+            grid[cy - 2, cx] == 0.5
+            and grid[cy + 2, cx] == 0.5
+            and grid[cy, cx - 2] == 0.5
+            and grid[cy, cx + 2] == 0.5
+        ):
             # List of directions to explore (UP, DOWN, LEFT, RIGHT)
             li = [1, 2, 3, 4]
 
